@@ -1711,7 +1711,7 @@ local Library do
             }):AddToTheme({Color = "Outline"})
             
             -- Copy button under alpha channel
-            Items["CopyButton"] = Instances:Create("TextButton", {
+            local copyButton = Instances:Create("TextButton", {
                 Parent = Items["ColorpickerWindow"].Instance,
                 FontFace = Library.Font,
                 TextColor3 = FromRGB(255, 255, 255),
@@ -1725,10 +1725,11 @@ local Library do
                 BorderSizePixel = 0,
                 TextSize = 12,
                 BackgroundColor3 = FromRGB(60, 60, 60)
-            }):AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Text"})
+            })
+            copyButton:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Text"})
             
             Instances:Create("UIStroke", {
-                Parent = Items["CopyButton"].Instance,
+                Parent = copyButton.Instance,
                 ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
                 LineJoinMode = Enum.LineJoinMode.Miter,
                 Name = "\0",
@@ -1736,16 +1737,16 @@ local Library do
             }):AddToTheme({Color = "Outline"})
             
             -- Hover effects for copy button
-            Items["CopyButton"]:OnHover(function()
-                Items["CopyButton"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Library.Theme["Hovered Element"]})
+            copyButton:OnHover(function()
+                copyButton:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Library.Theme["Hovered Element"]})
             end)
             
-            Items["CopyButton"]:OnHoverLeave(function()
-                Items["CopyButton"]:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Library.Theme["Element"]})
+            copyButton:OnHoverLeave(function()
+                copyButton:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Library.Theme["Element"]})
             end)
             
             -- Copy button click functionality
-            Items["CopyButton"]:Connect("MouseButton1Click", function()
+            copyButton:Connect("MouseButton1Click", function()
                 local colorString = ""
                 if Data.Alpha then
                     -- Include alpha if alpha channel is enabled
