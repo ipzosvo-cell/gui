@@ -1709,6 +1709,43 @@ local Library do
                 Name = "\0",
                 Color = FromRGB(27, 27, 32)
             }):AddToTheme({Color = "Outline"})
+            
+            -- Copy button under alpha: copies #RRGGBBAA to clipboard
+            Items["CopyButton"] = Instances:Create("TextButton", {
+                Parent = Items["ColorpickerWindow"].Instance,
+                FontFace = Library.Font,
+                TextColor3 = FromRGB(0, 0, 0),
+                BorderColor3 = FromRGB(0, 0, 0),
+                Text = "Copy",
+                AutoButtonColor = false,
+                AnchorPoint = Vector2New(1, 1),
+                Name = "\0",
+                Position = UDim2New(1, -6, 1, -22),
+                Size = UDim2New(0, 60, 0, 18),
+                BorderSizePixel = 0,
+                TextSize = 12,
+                BackgroundColor3 = FromRGB(255, 255, 255)
+            })
+
+            Items["CopyButton"]:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Text"})
+
+            Items["CopyButton"]:Connect("MouseButton1Down", function()
+                local hex = Colorpicker.HexValue or "#000000"
+                local alphaByte = MathFloor((Colorpicker.Alpha or 0) * 255)
+                local alphaHex = StringFormat("%02X", alphaByte)
+                local full = "#" .. StringGSub(hex, "#", "") .. alphaHex
+                if setclipboard then
+                    pcall(setclipboard, full)
+                end
+
+                -- feedback
+                Items["CopyButton"].Instance.Text = "Copied!"
+                delay(0.8, function()
+                    if Items["CopyButton"] and Items["CopyButton"].Instance then
+                        Items["CopyButton"].Instance.Text = "Copy"
+                    end
+                end)
+            end)
         end
 
         local SlidingPalette = false
