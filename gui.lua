@@ -1656,7 +1656,7 @@ local Library do
                 AutoButtonColor = false,
                 AnchorPoint = Vector2New(0, 1),
                 Name = "\0",
-                Position = UDim2New(0, 0, 1, -20),
+                Position = UDim2New(0, 0, 1, 0),
                 Size = UDim2New(1, -26, 0, 18),
                 BorderSizePixel = 0,
                 TextSize = 14,
@@ -1709,61 +1709,6 @@ local Library do
                 Name = "\0",
                 Color = FromRGB(27, 27, 32)
             }):AddToTheme({Color = "Outline"})
-            
-            -- Copy button under alpha channel
-            local copyButton = Instances:Create("TextButton", {
-                Parent = Items["ColorpickerWindow"].Instance,
-                FontFace = Library.Font,
-                TextColor3 = FromRGB(255, 255, 255),
-                BorderColor3 = FromRGB(0, 0, 0),
-                Text = "COPY",
-                AutoButtonColor = false,
-                AnchorPoint = Vector2New(0, 1),
-                Name = "\0",
-                Position = UDim2New(0, 0, 1, -20),
-                Size = UDim2New(1, -26, 0, 18),
-                BorderSizePixel = 0,
-                TextSize = 12,
-                BackgroundColor3 = FromRGB(60, 60, 60)
-            })
-            copyButton:AddToTheme({BackgroundColor3 = "Element", TextColor3 = "Text"})
-            
-            Instances:Create("UIStroke", {
-                Parent = copyButton.Instance,
-                ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-                LineJoinMode = Enum.LineJoinMode.Miter,
-                Name = "\0",
-                Color = FromRGB(27, 27, 32)
-            }):AddToTheme({Color = "Outline"})
-            
-            -- Hover effects for copy button
-            copyButton:OnHover(function()
-                copyButton:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Library.Theme["Hovered Element"]})
-            end)
-            
-            copyButton:OnHoverLeave(function()
-                copyButton:Tween(TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Library.Theme["Element"]})
-            end)
-            
-            -- Copy button click functionality
-            copyButton:Connect("MouseButton1Click", function()
-                local colorString = ""
-                if Data.Alpha then
-                    -- Include alpha if alpha channel is enabled
-                    colorString = string.format("%s%02x", Colorpicker.HexValue, math.floor(Colorpicker.Alpha * 255))
-                else
-                    colorString = Colorpicker.HexValue
-                end
-                
-                -- Copy to clipboard (Roblox way)
-                if setclipboard then
-                    setclipboard(colorString)
-                    Library:Notification("Copied color: " .. colorString, 2, Library.Theme.Accent)
-                else
-                    -- Fallback notification if setclipboard is not available
-                    Library:Notification("Color: " .. colorString, 2, Library.Theme.Accent)
-                end
-            end)
         end
 
         local SlidingPalette = false
