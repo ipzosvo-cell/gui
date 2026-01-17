@@ -1485,7 +1485,7 @@ local Library do
                 Position = UDim2New(0, Data.Parent.Instance.AbsolutePosition.X, 0, Data.Parent.Instance.AbsolutePosition.Y + 15),
                 BorderColor3 = FromRGB(10, 10, 10),
                 Visible = false,
-                Size = UDim2New(0, 238, 0, 224),
+                Size = UDim2New(0, 238, 0, 252),
                 BorderSizePixel = 2,
                 BackgroundColor3 = FromRGB(15, 15, 20)
             })  Items["ColorpickerWindow"]:AddToTheme({BackgroundColor3 = "Background"})
